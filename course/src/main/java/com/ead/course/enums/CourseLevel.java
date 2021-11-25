@@ -1,2 +1,7 @@
-package com.ead.course.enums;public enum CourseLevel {
+package com.ead.course.enums;
+
+public enum CourseLevel {
+    BEGINNER,
+    INTERMEDIATE,
+    ADVANCED
 }

@@ -1,2 +1,4 @@
-package com.ead.course.services;public interface CourseService {
+package com.ead.course.services;
+
+public interface CourseService {
 }

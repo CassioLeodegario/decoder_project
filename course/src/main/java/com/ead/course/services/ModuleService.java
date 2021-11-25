@@ -1,4 +1,4 @@
 package com.ead.course.services;
 
-public interface CourseService {
+public interface ModuleService {
 }
