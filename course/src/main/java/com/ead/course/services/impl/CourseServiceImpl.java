@@ -10,6 +10,7 @@ import com.ead.course.services.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
@@ -24,13 +25,19 @@ public class CourseServiceImpl implements CourseService {
     @Autowired
     LessonRepository lessonRepository;
 
+    @Transactional
     @Override
     public void delete(CourseModel courseModel) {
         List<ModuleModel> moduleModelList =  moduleRepository.findAllModulesIntoCourse(courseModel.getCourseId());
         if(!moduleModelList.isEmpty()){
             for(ModuleModel module : moduleModelList){
-                List<LessonModel> lessonModelList =
+                List<LessonModel> lessonModelList = lessonRepository.findAllLessonsIntoModule(module.getModuleId());
+                if(!lessonModelList.isEmpty()){
+                    lessonRepository.deleteAll(lessonModelList);
+                }
             }
+            moduleRepository.deleteAll(moduleModelList);
         }
+        courseRepository.delete(courseModel);
     }
 }
