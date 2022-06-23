@@ -66,4 +66,8 @@ public class CourseModel implements Serializable {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Set<CourseUserModel> courseUsers;
 
+    public CourseUserModel convertToCourseUserModel(UUID userID){
+        return new CourseUserModel(null, this, userID);
+    }
+
 }
