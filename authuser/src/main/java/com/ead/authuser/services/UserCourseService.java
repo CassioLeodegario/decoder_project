@@ -1,5 +1,6 @@
 package com.ead.authuser.services;
 
+import com.ead.authuser.models.UserCourseModel;
 import com.ead.authuser.models.UserModel;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -10,5 +11,8 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface UserCourseService {
+
+    boolean existsByUserAndCourseId(UserModel userModel, UUID courseId);
+    UserCourseModel save(UserCourseModel userCourseModel);
 
 }
