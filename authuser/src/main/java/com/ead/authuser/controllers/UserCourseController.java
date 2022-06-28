@@ -1,6 +1,6 @@
 package com.ead.authuser.controllers;
 
-import com.ead.authuser.clients.UserClient;
+import com.ead.authuser.clients.CourseClient;
 import com.ead.authuser.dtos.CourseDto;
 import com.ead.authuser.dtos.UserCourseDto;
 import com.ead.authuser.models.UserCourseModel;
@@ -27,7 +27,7 @@ import java.util.UUID;
 public class UserCourseController {
 
     @Autowired
-    UserClient userClient;
+    CourseClient courseClient;
 
     @Autowired
     UserService userService;
@@ -40,7 +40,7 @@ public class UserCourseController {
             @PageableDefault(page = 0, size = 10, sort = "courseId", direction = Sort.Direction.ASC) Pageable pageable,
             @PathVariable(value = "userId") UUID userId
     ) {
-        return ResponseEntity.status(HttpStatus.OK).body(userClient.getAllCoursesByUser(userId, pageable));
+        return ResponseEntity.status(HttpStatus.OK).body(courseClient.getAllCoursesByUser(userId, pageable));
     }
 
     @PostMapping("/users/{userId}/courses/subscription")
