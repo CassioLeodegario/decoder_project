@@ -29,6 +29,11 @@ logging:
     org.springframework.web: DEBUG
     org.hibernate: INFO
 
+ead:
+  api:
+    url:
+      course: 'http://ead-course-service'
+
 eureka:
   client:
     service-url:
