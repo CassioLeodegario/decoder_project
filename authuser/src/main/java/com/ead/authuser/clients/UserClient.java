@@ -42,7 +42,7 @@ public class UserClient {
             log.error("Error request /courses ", e);
         }
         log.info("Ending request /courses userId {} ", userId);
-        return result.getBody();
+        return result != null ? result.getBody() : null;
     }
 
 
