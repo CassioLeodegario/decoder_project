@@ -45,7 +45,7 @@ public class AuthUserClient {
             log.error("Error request /users ", e);
         }
         log.info("Ending request /users courseId {} ", courseId);
-        return result.getBody();
+        return result != null ? result.getBody() : null;
     }
 
 
@@ -61,5 +61,10 @@ public class AuthUserClient {
         courseUserDto.setCourseId(courseId);
         restTemplate.postForObject(url, courseUserDto, String.class);
 
+    }
+
+    public void deleteCourseInAuthUser(UUID courseId) {
+        String url = REQUEST_URL_AUTHUSER + "/users/courses/" + courseId;
+        restTemplate.exchange(url, HttpMethod.DELETE, null, String.class);
     }
 }
