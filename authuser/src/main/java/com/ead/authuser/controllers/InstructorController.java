@@ -29,13 +29,13 @@ public class InstructorController {
             @RequestBody @Valid InstructorDto instructorDto
     ){
         Optional<UserModel> userModelOptional = userService.findById(instructorDto.getUserId());
-        if (!userModelOptional.isPresent()) {
+        if (userModelOptional.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
         }
         var userModel = userModelOptional.get();
         userModel.setUserType(UserType.INSTRUCTOR);
         userModel.setLastUpdateDate(LocalDateTime.now(ZoneId.of("UTC")));
-        userService.save(userModel);
+        userService.updateUser(userModel);
         return ResponseEntity.status(HttpStatus.OK).body(userModel);
 
 
