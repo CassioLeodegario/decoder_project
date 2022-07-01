@@ -22,12 +22,18 @@ spring:
           show_sql: true
 
   rabbitmq:
-    addresses: amqps://nmirxeeo:xbw5ugx-i3ed3VNFCFmQvHdbaJ0oOblu@jackal.rmq.cloudamqp.com/nmirxeeo
+    addresses: ${AMQP}
 
 ead:
   api:
     url:
       authuser: 'http://ead-authuser-service/ead-authuser'
+  broker:
+    exchange:
+      userEventExchange: ead.userevent
+    queue:
+      userEventQueue:
+        name: ead.userevent.ms.course
 
 
 eureka:

@@ -25,7 +25,7 @@ spring:
       enabled: always
 
   rabbitmq:
-    addresses: amqps://nmirxeeo:xbw5ugx-i3ed3VNFCFmQvHdbaJ0oOblu@jackal.rmq.cloudamqp.com/nmirxeeo
+    addresses: ${AMQP}
 
 logging:
   level:
@@ -38,6 +38,9 @@ ead:
   api:
     url:
       course: 'http://ead-course-service/ead-course'
+  broker:
+    exchange:
+      userEvent: ead.userevent
 
 eureka:
   client:

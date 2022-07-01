@@ -8,4 +8,6 @@ import org.springframework.data.jpa.domain.Specification;
 public interface UserService {
 
     Page<UserModel> findAll(Specification<UserModel> specification, Pageable pageable);
+
+    UserModel save(UserModel userModel);
 }
