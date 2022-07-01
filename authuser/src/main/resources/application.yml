@@ -24,6 +24,9 @@ spring:
     ansi:
       enabled: always
 
+  rabbitmq:
+    addresses: amqps://nmirxeeo:xbw5ugx-i3ed3VNFCFmQvHdbaJ0oOblu@jackal.rmq.cloudamqp.com/nmirxeeo
+
 logging:
   level:
     com.ead: TRACE
