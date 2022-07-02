@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/../api-gateway/api-gateway.iml" filepath="$PROJECT_DIR$/../api-gateway/api-gateway.iml" />
       <module fileurl="file://$PROJECT_DIR$/../authuser/authuser.iml" filepath="$PROJECT_DIR$/../authuser/authuser.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../config-server/config-server.iml" filepath="$PROJECT_DIR$/../config-server/config-server.iml" />
       <module fileurl="file://$PROJECT_DIR$/../course/course.iml" filepath="$PROJECT_DIR$/../course/course.iml" />
       <module fileurl="file://$PROJECT_DIR$/../notification/notification.iml" filepath="$PROJECT_DIR$/../notification/notification.iml" />
       <module fileurl="file://$PROJECT_DIR$/../service-registry/service-registry.iml" filepath="$PROJECT_DIR$/../service-registry/service-registry.iml" />

@@ -8,6 +8,8 @@
         <option value="$PROJECT_DIR$/../course/pom.xml" />
         <option value="$PROJECT_DIR$/../notification/pom.xml" />
         <option value="$PROJECT_DIR$/../service-registry/pom.xml" />
+        <option value="$PROJECT_DIR$/../notification/config-server/pom.xml" />
+        <option value="$PROJECT_DIR$/../config-server/pom.xml" />
       </list>
     </option>
   </component>
