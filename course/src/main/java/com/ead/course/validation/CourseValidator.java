@@ -1,6 +1,9 @@
 package com.ead.course.validation;
 
 import com.ead.course.dtos.CourseDto;
+import com.ead.course.enums.UserType;
+import com.ead.course.models.UserModel;
+import com.ead.course.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -17,6 +20,9 @@ public class CourseValidator implements Validator {
     @Qualifier("defaultValidator")
     private Validator validator;
 
+    @Autowired
+    UserService userService;
+
     @Override
     public boolean supports(Class<?> clazz) {
         return false;
@@ -26,31 +32,27 @@ public class CourseValidator implements Validator {
     public void validate(Object target, Errors errors) {
         CourseDto courseDto = (CourseDto) target;
         validator.validate(courseDto, errors);
-        if(!errors.hasErrors()){
+        if (!errors.hasErrors()) {
             validateUserInstructor(courseDto.getUserInstructor(), errors);
         }
 
     }
 
-    private void validateUserInstructor(UUID userInstructor, Errors errors){
-//        ResponseEntity<UserDto> responseUserInstructor;
-//        try {
-//            responseUserInstructor = authUserClient.getOneUserById(userInstructor);
-//            if(responseUserInstructor.getBody().getUserType().equals(UserType.STUDENT)){
-//                errors.rejectValue(
-//                        "userInstructor",
-//                        "UserInstructorError",
-//                        "User must be INSTRUCTOR or ADMIN"
-//                );
-//            }
-//        } catch (HttpStatusCodeException e) {
-//            if(e.getStatusCode().equals(HttpStatus.NOT_FOUND)){
-//                errors.rejectValue(
-//                        "userInstructor",
-//                        "UserInstructorError",
-//                        "Instructor not found"
-//                );
-//            }
-//        }
+    private void validateUserInstructor(UUID userInstructor, Errors errors) {
+        var userModel = userService.findById(userInstructor);
+        if (userModel.isEmpty()) {
+            errors.rejectValue(
+                    "userInstructor",
+                    "UserInstructorError",
+                    "Instructor not found"
+            );
+        }else if (userModel.get().getUserType().equals(UserType.STUDENT.toString())) {
+            errors.rejectValue(
+                    "userInstructor",
+                    "UserInstructorError",
+                    "User must be INSTRUCTOR or ADMIN"
+            );
+        }
+
     }
 }
