@@ -66,7 +66,7 @@ public class NotificationModel {
         return notificationDate;
     }
 
-    public void setNotificationDate(LocalDateTime notificationDate) {
+    public void setCreationDate(LocalDateTime notificationDate) {
         this.notificationDate = notificationDate;
     }
 
