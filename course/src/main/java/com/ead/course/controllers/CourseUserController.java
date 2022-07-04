@@ -4,7 +4,6 @@ package com.ead.course.controllers;
 import com.ead.course.dtos.SubscriptionDto;
 import com.ead.course.enums.UserStatus;
 import com.ead.course.models.CourseModel;
-import com.ead.course.models.UserModel;
 import com.ead.course.services.CourseService;
 import com.ead.course.services.UserService;
 import com.ead.course.specifications.SpecificationTemplate;
@@ -72,9 +71,9 @@ public class CourseUserController {
         if(userModelOptional.get().getUserStatus().equals(UserStatus.BLOCKED.toString())){
             return ResponseEntity.status(HttpStatus.CONFLICT).body("User is blocked");
         }
-        courseService.saveSubscriptionUserInCourse(
-                        courseModelOptional.get().getCourseId(),
-                        userModelOptional.get().getUserId()
+        courseService.saveSubscriptionUserInCourseAndSendNotification(
+                        courseModelOptional.get(),
+                        userModelOptional.get()
                 );
 
         return ResponseEntity.status(HttpStatus.CREATED)
