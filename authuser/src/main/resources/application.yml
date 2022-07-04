@@ -9,3 +9,6 @@ spring:
         service-id: ead-config-server
       username: configServer
       password: ${CONFIG_PASSWORD}
+
+
+
