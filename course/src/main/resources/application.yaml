@@ -1,53 +1,13 @@
-server:
-  port: 8082
-  servlet:
-    context-path: '/ead-course/'
 
 spring:
   application:
     name: ead-course-service
   config:
-    import: 'optional:configserver:'
+    import: 'configserver:'
   cloud:
     config:
       discovery:
         service-id: ead-config-server
+      username: configServer
+      password: ${CONFIG_PASSWORD}
 
-  datasource:
-    url: jdbc:postgresql://localhost:5432/ead-course-v2
-    username: postgres
-    password: postgres
-
-  jpa:
-    hibernate:
-      ddl-auto: update
-      dialect: org.hibernate.dialect.PostgreSQLDialect
-      jdbc:
-        lob.non-contextual-creation: true
-      properties:
-        hibernate:
-          show_sql: true
-
-  rabbitmq:
-    addresses: ${AMQP}
-
-ead:
-  api:
-    url:
-      authuser: 'http://ead-authuser-service/ead-authuser'
-  broker:
-    exchange:
-      userEventExchange: ead.userevent
-      notificationCommandExchange: ead.notificationcommand
-    queue:
-      userEventQueue:
-        name: ead.userevent.ms.course
-    key:
-      notificationCommandKey: ms.notification
-
-eureka:
-  client:
-    service-url:
-      defaultZone: 'http://localhost:8761/eureka'
-  instance:
-    hostname: localhost

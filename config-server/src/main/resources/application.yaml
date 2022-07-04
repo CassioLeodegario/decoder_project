@@ -14,10 +14,18 @@ spring:
         encrypt:
           enabled: false
 
+ead:
+  configServer:
+    username: configServer
+    password: ${CONFIG_PASSWORD}
+  serviceRegistry:
+    username: serviceRegistry
+    password: ${REGISTRY_PASSWORD}
+
 eureka:
   client:
     service-url:
-      defaultZone: 'http://localhost:8761/eureka'
+      defaultZone: 'http://${ead.serviceRegistry.username}:${ead.serviceRegistry.password}@localhost:8761/eureka'
   instance:
     hostname: localhost
 
