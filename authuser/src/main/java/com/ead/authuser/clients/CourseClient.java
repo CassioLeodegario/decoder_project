@@ -12,6 +12,8 @@ import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -36,32 +38,33 @@ public class CourseClient {
     String REQUEST_URI;
 
 
-//    @Retry(name = "retryInstance", fallbackMethod = "retryFallback")
+    //    @Retry(name = "retryInstance", fallbackMethod = "retryFallback")
     @CircuitBreaker(name = "circuitBreakerInstance")
-    public Page<CourseDto> getAllCoursesByUser(UUID userId, Pageable pageable){
+    public Page<CourseDto> getAllCoursesByUser(UUID userId, Pageable pageable, String token) {
         ResponseEntity<ResponsePageDto<CourseDto>> result = null;
         String url = utilsService.createUrl(userId, pageable);
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", token);
+        HttpEntity<String> requestEntity = new HttpEntity<>("parameters", headers);
         log.debug("Request URL: {} ", url);
         log.info("Request URL: {} ", url);
-        try{
-            ParameterizedTypeReference<ResponsePageDto<CourseDto>> responseType = new ParameterizedTypeReference<>() {};
-            result = restTemplate.exchange(url, HttpMethod.GET, null, responseType);
 
-            log.debug("Response Number of Elements: {} ", result.getBody().getContent().size());
-        } catch (HttpStatusCodeException e){
-            log.error("Error request /courses ", e);
-        }
+        ParameterizedTypeReference<ResponsePageDto<CourseDto>> responseType = new ParameterizedTypeReference<>() {
+        };
+        result = restTemplate.exchange(url, HttpMethod.GET, requestEntity, responseType);
+
+        log.debug("Response Number of Elements: {} ", result.getBody().getContent().size());
         log.info("Ending request /courses userId {} ", userId);
         return result != null ? result.getBody() : null;
     }
 
-    public Page<CourseDto> retryFallback(UUID userId, Pageable pageable, Throwable t){
+    public Page<CourseDto> retryFallback(UUID userId, Pageable pageable, Throwable t) {
         log.error("Inside retry fallback, cause - ", t.toString());
         List<CourseDto> searchResult = new ArrayList<>();
         return new PageImpl<>(searchResult);
     }
 
-    public Page<CourseDto> circuitBreakerFallback(UUID userId, Pageable pageable, Throwable t){
+    public Page<CourseDto> circuitBreakerFallback(UUID userId, Pageable pageable, Throwable t) {
         log.error("Inside circuitBreakerFallback, cause - ", t.toString());
         List<CourseDto> searchResult = new ArrayList<>();
         return new PageImpl<>(searchResult);
